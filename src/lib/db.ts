@@ -16,11 +16,21 @@ export interface Profile {
   github_url: string;
   linkedin_url?: string;
   twitter_url?: string;
+  facebook_url?: string;
+  threads_url?: string;
+  tiktok_url?: string;
   spotify_url?: string;
   apple_music_url?: string;
   tidal_url?: string;
+  amazon_music_url?: string;
   youtube_music_url?: string;
+  shazam_url?: string;
+  genius_url?: string;
+  iheart_url?: string;
+  qobuz_url?: string;
   location: string;
+  education: string;
+  all_links?: Record<string, string>;
 }
 
 export interface Project {
@@ -37,7 +47,19 @@ export interface Project {
   case_study_url?: string;
   thumbnail_url?: string;
   metrics?: Record<string, any>;
+  architecture_summary?: string;
+  code_snippet?: string;
   featured: boolean;
+  sort_order: number;
+}
+
+export interface PressItem {
+  id: string;
+  title: string;
+  publisher: string;
+  url: string;
+  description?: string;
+  badge_color?: string;
   sort_order: number;
 }
 
@@ -55,7 +77,12 @@ export interface MusicTrack {
   spotify_url?: string;
   apple_music_url?: string;
   tidal_url?: string;
+  amazon_music_url?: string;
   youtube_music_url?: string;
+  shazam_url?: string;
+  genius_url?: string;
+  iheart_url?: string;
+  qobuz_url?: string;
   lyrics?: string;
   featured: boolean;
   stream_count: number;

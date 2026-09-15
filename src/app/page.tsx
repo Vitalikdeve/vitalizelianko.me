@@ -1,4 +1,4 @@
-import { sql } from '@/lib/db';
+import { sql, Profile, Project, PressItem } from '@/lib/db';
 import { 
   Terminal, 
   ExternalLink, 
@@ -13,115 +13,89 @@ import {
   Layers, 
   Send,
   Headphones,
-  CheckCircle2
+  GraduationCap,
+  MapPin,
+  FileCode,
+  CheckCircle2,
+  Lock
 } from 'lucide-react';
+import SocialAppGrid from '@/components/SocialAppGrid';
+import ProjectCard from '@/components/ProjectCard';
+import PressSection from '@/components/PressSection';
+import MusicSection from '@/components/MusicSection';
+import LegalNotice from '@/components/LegalNotice';
 
-async function getPortfolioData() {
-  let profile = null;
-  let projects: any[] = [];
-  let music: any[] = [];
+async function getSiteData() {
+  let profile: Profile | null = null;
+  let projects: Project[] = [];
+  let press: PressItem[] = [];
 
   try {
     if (sql) {
       const profileRows = await sql`SELECT * FROM portfolio_profile LIMIT 1;`;
-      profile = profileRows[0] || null;
+      profile = (profileRows[0] as unknown as Profile) || null;
 
       const projectRows = await sql`SELECT * FROM portfolio_projects ORDER BY sort_order ASC;`;
-      projects = projectRows || [];
+      projects = (projectRows as unknown as Project[]) || [];
 
-      const musicRows = await sql`SELECT * FROM portfolio_music ORDER BY sort_order ASC;`;
-      music = musicRows || [];
+      const pressRows = await sql`SELECT * FROM portfolio_press ORDER BY sort_order ASC;`;
+      press = (pressRows as unknown as PressItem[]) || [];
     }
   } catch (err) {
     console.warn('Database query fallback:', err);
   }
 
-  // Fallback defaults in case DB is offline during build
+  // Fallback defaults
   if (!profile) {
     profile = {
+      id: '1',
       full_name: 'Vitali Zelianko',
-      headline: 'Founder, CEO @ VitoCV · AI Systems Architect · Music Producer',
-      bio: 'Architecting resilient production web applications, multi-provider AI failovers, and streaming data platforms. Creator of VitoCV / ResumeAI and developer infrastructure.',
+      headline: 'Founder, CEO @ VitoCV · AI Systems Architect · Electronic Music Producer',
+      bio: 'Architecting resilient production web platforms, distributed file processing engines, and multi-model AI orchestration. Creating electronic soundscapes distributed worldwide.',
       email: 'VitaliZelianko@vitocv.com',
       github_url: 'https://github.com/Vitalikdeve',
-      location: 'Warsaw, Poland / Remote'
+      twitter_url: 'https://x.com/vitocv_com?s=11',
+      facebook_url: 'https://www.facebook.com/share/17urzu3NvC/?mibextid=wwXIfr',
+      threads_url: 'https://www.threads.com/@vitalik_zelenko?igshid=NTc4MTIwNjQ2YQ==',
+      tiktok_url: 'https://www.tiktok.com/t/ZP8tYncSc/',
+      spotify_url: 'https://open.spotify.com/artist/5tjCSnC4R007H7E5ODqLs4?si=LQtgztahRTyel1schcUUUA&utm_source=copy-link',
+      apple_music_url: 'https://music.apple.com/tr/artist/vitali-zelianko/6786468164',
+      tidal_url: 'https://tidal.com/artist/81979301/u',
+      amazon_music_url: 'https://music.amazon.com/artists/B0H5NR8FTW/vitali-zelianko?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_oVY4x2K2ijYXXtfZssWlm3GpX',
+      youtube_music_url: 'https://music.youtube.com/@VitaliZelianko',
+      shazam_url: 'https://www.shazam.com/artist/vitali-zelianko/6786468164',
+      genius_url: 'https://genius.com/artists/Vitali-zelianko/albums',
+      iheart_url: 'https://www.iheart.com/artist/vitali-zelianko-51235341',
+      qobuz_url: 'https://www.qobuz.com/us-en/interpreter/vitali-zelianko/35309201',
+      location: 'European Union',
+      education: 'Communications Academy'
     };
   }
 
-  if (projects.length === 0) {
-    projects = [
-      {
-        slug: 'vitocv',
-        title: 'ResumeAI (VitoCV)',
-        tagline: 'Production AI-powered career platform with multilingual ATS scoring',
-        description: 'Flagship career platform featuring dual-mode PDF compilation, 9-language localization, bank-grade Row-Level Security, and multi-model cascade orchestration (Gemini, Mistral, OpenAI).',
-        role: 'Founder, CEO & Full-Stack Architect',
-        category: 'AI & SaaS',
-        tech_stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'TailwindCSS', 'Playwright'],
-        demo_url: 'https://vitocv.com',
-        github_url: 'https://github.com/Vitalikdeve/resumeai',
-        case_study_url: 'https://github.com/Vitalikdeve/resumeai-case-study',
-        featured: true
-      },
-      {
-        slug: 'next-ai-toolkit',
-        title: 'next-ai-toolkit',
-        tagline: 'Lightweight TypeScript toolkit for resilient multi-provider AI streaming',
-        description: 'Production-ready toolkit implementing circuit breakers, exponential jitter backoff, abort signal streaming cancellation, and token cost telemetry.',
-        role: 'Author & Maintainer',
-        category: 'Developer Tools',
-        tech_stack: ['TypeScript', 'Vitest', 'Node.js', 'Next.js', 'GitHub Actions'],
-        github_url: 'https://github.com/Vitalikdeve/next-ai-toolkit',
-        featured: true
-      },
-      {
-        slug: 'megaconvert-v2',
-        title: 'MegaConvert v2',
-        tagline: 'Distributed media and document transformation engine with BullMQ pools',
-        description: 'Asynchronous distributed file transformation platform featuring containerized worker sandboxing, real-time WebSocket progress telemetry, and batch media transcoding.',
-        role: 'Lead Engineer',
-        category: 'Distributed Systems',
-        tech_stack: ['Node.js', 'Fastify', 'Redis', 'BullMQ', 'Docker', 'FFmpeg'],
-        github_url: 'https://github.com/Vitalikdeve/megaconvert-v2',
-        featured: true
-      },
-      {
-        slug: 'megatransfer',
-        title: 'MegaTransfer',
-        tagline: 'Chunked resumable file streaming with deterministic hashing',
-        description: 'Resilient high-throughput file transfer platform with deterministic chunk hashing, automatic resumable sessions, and direct stream disk buffering.',
-        role: 'Lead Engineer',
-        category: 'Distributed Systems',
-        tech_stack: ['TypeScript', 'WebSockets', 'Node.js', 'Streaming', 'Docker'],
-        github_url: 'https://github.com/Vitalikdeve/MegaTransfer',
-        featured: true
-      }
-    ];
-  }
-
-  return { profile, projects, music };
+  return { profile, projects, press };
 }
 
 export default async function HomePage() {
-  const { profile, projects, music } = await getPortfolioData();
+  const { profile, projects, press } = await getSiteData();
 
   return (
-    <div className="relative min-h-screen text-slate-100 antialiased">
-      {/* Top ambient navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-slate-950/70 backdrop-blur-xl">
+    <div className="relative min-h-screen text-slate-100 antialiased selection:bg-sky-500/30 selection:text-sky-200">
+      {/* Top Ambient Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-slate-950/75 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2.5 font-bold tracking-tight text-white hover:text-sky-400 transition-colors">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400 font-mono text-sm">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 border border-white/10 text-sky-400 font-mono text-sm font-extrabold shadow-inner">
               VZ
             </span>
-            <span className="text-lg">Vitali Zelianko</span>
+            <span className="text-lg tracking-tight">Vitali Zelianko</span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-            <a href="#about" className="hover:text-white transition-colors">About</a>
-            <a href="#projects" className="hover:text-white transition-colors">Projects & SaaS</a>
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-400">
+            <a href="#about" className="hover:text-white transition-colors">Profile</a>
+            <a href="#apps" className="hover:text-white transition-colors">Apps & Hub</a>
+            <a href="#projects" className="hover:text-white transition-colors">Engineering & SaaS</a>
+            <a href="#press" className="hover:text-white transition-colors">Press</a>
             <a href="#music" className="hover:text-white transition-colors">Music</a>
-            <a href="#stack" className="hover:text-white transition-colors">Stack</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </nav>
 
@@ -130,30 +104,45 @@ export default async function HomePage() {
               href="https://github.com/Vitalikdeve"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-all"
             >
               <Github className="h-4 w-4" />
               <span>GitHub</span>
             </a>
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-1.5 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-lg shadow-sky-500/20"
+              className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25"
             >
-              <span>Get in Touch</span>
+              <span>Collaboration</span>
             </a>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section id="about" className="relative mx-auto max-w-6xl px-6 pt-20 pb-16 md:pt-32 md:pb-24">
-        <div className="flex flex-col items-start gap-6 max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-mono text-sky-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Building production systems & soundscapes</span>
+      <section id="about" className="relative mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-28 md:pb-20">
+        <div className="flex flex-col items-start gap-6 max-w-4xl">
+          {/* Status Badges */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 text-xs font-mono text-sky-400">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Founder & Systems Architect</span>
+            </div>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-mono text-purple-300">
+              <Disc className="h-3 w-3 animate-spin" />
+              <span>Electronic Producer</span>
+            </div>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
+              <MapPin className="h-3 w-3 text-sky-400" />
+              <span>{profile.location}</span>
+            </div>
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
+              <GraduationCap className="h-3 w-3 text-purple-400" />
+              <span>{profile.education}</span>
+            </div>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl leading-[1.08] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-100 to-slate-400">
+          <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl leading-[1.06] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-100 to-slate-400">
             {profile.headline}
           </h1>
 
@@ -164,365 +153,179 @@ export default async function HomePage() {
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
               href="#projects"
-              className="flex items-center gap-2 rounded-xl bg-sky-500 px-6 py-3 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-xl shadow-sky-500/25"
+              className="flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-xl shadow-sky-500/25 font-mono"
             >
               <Terminal className="h-4 w-4" />
-              <span>Explore Projects</span>
+              <span>Inspect Systems Architecture</span>
             </a>
             <a
               href="#music"
-              className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition-all backdrop-blur"
+              className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all backdrop-blur font-mono"
             >
               <Headphones className="h-4 w-4 text-purple-400" />
-              <span>Listen to Music</span>
+              <span>Explore Discography</span>
             </a>
           </div>
         </div>
 
-        {/* Highlight Stats Bar */}
+        {/* Global Key Metrics Banner */}
         <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4 pt-8 border-t border-white/[0.08]">
-          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-            <div className="text-2xl font-bold font-mono text-sky-400">10k+</div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
+            <div className="text-3xl font-bold font-mono text-sky-400">10k+</div>
             <div className="text-xs text-slate-400 mt-1">Platform Users & Runs</div>
           </div>
-          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-            <div className="text-2xl font-bold font-mono text-emerald-400">99.98%</div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
+            <div className="text-3xl font-bold font-mono text-emerald-400">99.98%</div>
             <div className="text-xs text-slate-400 mt-1">AI Failover Availability</div>
           </div>
-          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-            <div className="text-2xl font-bold font-mono text-purple-400">Spotify / Apple</div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
+            <div className="text-3xl font-bold font-mono text-purple-400">9 DSPs</div>
             <div className="text-xs text-slate-400 mt-1">Global Music Distribution</div>
           </div>
-          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-            <div className="text-2xl font-bold font-mono text-amber-400">9 Locales</div>
-            <div className="text-xs text-slate-400 mt-1">Internationalized Products</div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
+            <div className="text-3xl font-bold font-mono text-amber-400">9 Locales</div>
+            <div className="text-xs text-slate-400 mt-1">Full Key Parity Localization</div>
           </div>
         </div>
       </section>
 
-      {/* Featured Projects Section */}
-      <section id="projects" className="relative border-t border-white/[0.06] py-20 bg-slate-950/40">
+      {/* 16+ Verified Social & Streaming App Grid */}
+      <div id="apps">
+        <SocialAppGrid />
+      </div>
+
+      {/* Deep Dive Projects & Technical Case Studies */}
+      <section id="projects" className="relative py-20 border-t border-white/[0.06] bg-slate-950/30">
         <div className="mx-auto max-w-6xl px-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
                 <Layers className="h-3.5 w-3.5" />
-                Featured Work
+                Engineering Systems & SaaS
               </div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-white">
-                Engineered Platforms & Systems
+              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-white">
+                Flagship Platforms & Architecture
               </h2>
+              <p className="mt-2 text-slate-400 max-w-2xl">
+                Explore in-depth system architecture designs, resilience patterns, and production code snippets across enterprise SaaS and distributed developer tools.
+              </p>
             </div>
             <a
               href="https://github.com/Vitalikdeve"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-sky-400 hover:text-sky-300"
+              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-sky-400 hover:text-sky-300"
             >
-              <span>View all repositories on GitHub</span>
-              <ExternalLink className="h-4 w-4" />
+              <span>All Repositories</span>
+              <ExternalLink className="h-3.5 w-3.5" />
             </a>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((proj: any, idx: number) => (
-              <div
-                key={proj.slug || idx}
-                className="glass-card group flex flex-col justify-between rounded-2xl p-7"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <span className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs font-mono text-slate-300">
-                      {proj.category}
-                    </span>
-                    <span className="text-xs text-slate-500 font-mono">
-                      {proj.role}
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-white group-hover:text-sky-400 transition-colors">
-                    {proj.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-sky-200/70 font-medium">
-                    {proj.tagline}
-                  </p>
-
-                  <p className="mt-4 text-sm text-slate-400 leading-relaxed">
-                    {proj.description}
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap gap-1.5">
-                    {proj.tech_stack?.map((tech: string) => (
-                      <span
-                        key={tech}
-                        className="rounded-lg bg-sky-500/10 border border-sky-500/20 px-2.5 py-1 text-xs font-mono text-sky-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8 flex items-center gap-4 pt-4 border-t border-white/[0.06]">
-                  {proj.demo_url && (
-                    <a
-                      href={proj.demo_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-sky-400 transition-colors"
-                    >
-                      <span>Live Platform</span>
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  )}
-                  {proj.case_study_url && (
-                    <a
-                      href={proj.case_study_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-purple-400 hover:text-purple-300 transition-colors"
-                    >
-                      <span>Case Study</span>
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  )}
-                  {proj.github_url && (
-                    <a
-                      href={proj.github_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors"
-                    >
-                      <Github className="h-4 w-4" />
-                      <span>Code</span>
-                    </a>
-                  )}
-                </div>
-              </div>
+          <div className="grid gap-8 md:grid-cols-2">
+            {projects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Music Section */}
-      <section id="music" className="relative border-t border-white/[0.06] py-20 bg-gradient-to-b from-slate-950 via-purple-950/10 to-slate-950">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono text-purple-400 uppercase tracking-wider mb-2">
-              <Disc className="h-3.5 w-3.5 animate-spin" />
-              Music & Sound Design
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-white">
-              Official Releases & Discography
-            </h2>
-            <p className="mt-2 text-slate-400 max-w-2xl">
-              Electronic, melodic, and cinematic productions published across major streaming networks.
-            </p>
-          </div>
+      {/* Press, Media & Ecosystem */}
+      <div id="press">
+        <PressSection items={press} />
+      </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {/* Spotify Card */}
-            <div className="glass-card rounded-2xl p-6 border-emerald-500/20 hover:border-emerald-500/40">
-              <div className="flex items-center gap-3 mb-4 text-emerald-400">
-                <Radio className="h-6 w-6" />
-                <h3 className="font-bold text-lg text-white">Spotify</h3>
-              </div>
-              <p className="text-sm text-slate-400 mb-6">
-                Stream latest tracks, singles, and curated creator playlists.
-              </p>
-              <a
-                href="https://open.spotify.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-4 py-2.5 text-sm font-semibold text-emerald-300 hover:bg-emerald-500/30 transition-all"
-              >
-                <span>Listen on Spotify</span>
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
+      {/* Music Studio & Discography */}
+      <MusicSection profile={profile} />
 
-            {/* Apple Music Card */}
-            <div className="glass-card rounded-2xl p-6 border-rose-500/20 hover:border-rose-500/40">
-              <div className="flex items-center gap-3 mb-4 text-rose-400">
-                <Music className="h-6 w-6" />
-                <h3 className="font-bold text-lg text-white">Apple Music</h3>
-              </div>
-              <p className="text-sm text-slate-400 mb-6">
-                Lossless spatial audio releases available worldwide on Apple Music.
-              </p>
-              <a
-                href="https://music.apple.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-rose-500/20 border border-rose-500/40 px-4 py-2.5 text-sm font-semibold text-rose-300 hover:bg-rose-500/30 transition-all"
-              >
-                <span>Apple Music</span>
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
-
-            {/* Tidal & YouTube Music */}
-            <div className="glass-card rounded-2xl p-6 border-sky-500/20 hover:border-sky-500/40">
-              <div className="flex items-center gap-3 mb-4 text-sky-400">
-                <Headphones className="h-6 w-6" />
-                <h3 className="font-bold text-lg text-white">Tidal & YouTube Music</h3>
-              </div>
-              <p className="text-sm text-slate-400 mb-6">
-                Master quality sound on Tidal and official audio visuals on YouTube Music.
-              </p>
-              <div className="flex gap-2">
-                <a
-                  href="https://tidal.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold text-white hover:bg-white/20 transition-all"
-                >
-                  <span>Tidal</span>
-                </a>
-                <a
-                  href="https://music.youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-xl bg-red-500/20 border border-red-500/40 px-3 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/30 transition-all"
-                >
-                  <span>YouTube Music</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tech Stack & Architecture Radar */}
-      <section id="stack" className="relative border-t border-white/[0.06] py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
-              <Cpu className="h-3.5 w-3.5" />
-              Core Competencies
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-white">
-              Architecture & Technology Stack
-            </h2>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="glass-card rounded-2xl p-6">
-              <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-sky-400" />
-                AI Systems & Resiliency
-              </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Multi-model cascade failover routing (Gemini, OpenAI, Mistral), streaming token telemetry, circuit breakers, and deterministic structured outputs (Zod).
-              </p>
-            </div>
-
-            <div className="glass-card rounded-2xl p-6">
-              <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                <Terminal className="h-5 w-5 text-emerald-400" />
-                Full-Stack & Cloud Edge
-              </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Next.js 15+ App Router, React 19, TypeScript, PostgreSQL (Neon / Supabase), Redis BullMQ pipelines, and Vercel edge runtime deployments.
-              </p>
-            </div>
-
-            <div className="glass-card rounded-2xl p-6">
-              <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-purple-400" />
-                Security & Zero-Trust
-              </h3>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                PostgreSQL Row-Level Security (RLS) multi-tenancy, Cloudflare Turnstile & WAF bot mitigation, automated Playwright E2E testing suites.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="relative border-t border-white/[0.06] py-20 bg-slate-950/60">
+      {/* Contact & Inquiries */}
+      <section id="contact" className="relative py-20 border-t border-white/[0.06] bg-slate-950/70">
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-white">
-              Let's Connect & Collaborate
+            <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
+              <Mail className="h-3.5 w-3.5" />
+              Direct Communication
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-white">
+              Initiate Collaboration
             </h2>
             <p className="mt-3 text-slate-400 max-w-xl mx-auto">
-              Interested in consulting, system architecture advisory, music licensing, or strategic SaaS partnerships? Drop a message directly to my inbox.
+              Open for technical architecture advisory, strategic SaaS partnerships, venture opportunities, and music licensing.
             </p>
           </div>
 
-          <form action="/api/contact" method="POST" className="glass-card rounded-2xl p-8 max-w-xl mx-auto space-y-4">
+          <form action="/api/contact" method="POST" className="glass-card rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 sm:p-10 max-w-xl mx-auto space-y-4 shadow-2xl">
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">Your Name</label>
+              <label className="block text-xs font-mono text-slate-400 mb-1.5">Full Name</label>
               <input
                 type="text"
                 name="name"
                 required
                 placeholder="Alex Mercer"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">Your Email</label>
+              <label className="block text-xs font-mono text-slate-400 mb-1.5">Email Address</label>
               <input
                 type="email"
                 name="email"
                 required
-                placeholder="alex@company.com"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                placeholder="alex@organization.com"
+                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">Subject</label>
+              <label className="block text-xs font-mono text-slate-400 mb-1.5">Inquiry Subject</label>
               <input
                 type="text"
                 name="subject"
-                placeholder="Advisory / Partnership / Music"
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                placeholder="Advisory / Venture / Music Sync"
+                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">Message</label>
+              <label className="block text-xs font-mono text-slate-400 mb-1.5">Message</label>
               <textarea
                 name="message"
                 required
                 rows={4}
                 placeholder="Hello Vitali, I would like to discuss..."
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-sky-500 py-3 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-lg shadow-sky-500/20"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl bg-sky-500 py-4 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25 font-mono"
             >
               <Send className="h-4 w-4" />
-              <span>Send Message</span>
+              <span>Transmit Message</span>
             </button>
           </form>
         </div>
       </section>
 
+      {/* Strict 2026 Legal Notice */}
+      <LegalNotice />
+
       {/* Footer */}
       <footer className="border-t border-white/[0.06] py-10 bg-slate-950">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            © {new Date().getFullYear()} Vitali Zelianko (vitalizelianko.me). All rights reserved.
+            © 2026 Vitali Zelianko (vitalizelianko.me). All rights reserved.
           </div>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com/Vitalikdeve" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
+          <div className="flex items-center gap-6 font-mono">
+            <a href="https://github.com/Vitalikdeve" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
               GitHub
             </a>
-            <a href="https://vitocv.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">
-              VitoCV
+            <a href="https://vitocv.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
+              VitoCV™
             </a>
-            <a href="mailto:VitaliZelianko@vitocv.com" className="hover:text-slate-300">
-              Email
+            <a href="mailto:VitaliZelianko@vitocv.com" className="hover:text-slate-300 transition-colors">
+              Direct Contact
             </a>
           </div>
         </div>

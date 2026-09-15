@@ -28,6 +28,7 @@ import PressSection from '@/components/PressSection';
 import MusicSection from '@/components/MusicSection';
 import LegalNotice from '@/components/LegalNotice';
 import ResumeSection from '@/components/ResumeSection';
+import ContactForm from '@/components/ContactForm';
 
 async function getSiteData() {
   let profile: Profile | null = null;
@@ -306,58 +307,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <form action="/api/contact" method="POST" className="glass-card rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 sm:p-10 max-w-xl mx-auto space-y-4 shadow-2xl">
-            <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1.5">Full Name</label>
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Alex Mercer"
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1.5">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="alex@organization.com"
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1.5">Inquiry Subject</label>
-              <input
-                type="text"
-                name="subject"
-                placeholder="Advisory / Venture / Music Sync"
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1.5">Message</label>
-              <textarea
-                name="message"
-                required
-                rows={4}
-                placeholder="Hello Vitali, I would like to discuss..."
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 font-medium"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 rounded-2xl bg-sky-500 py-4 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25 font-mono"
-            >
-              <Send className="h-4 w-4" />
-              <span>Transmit Message</span>
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
 

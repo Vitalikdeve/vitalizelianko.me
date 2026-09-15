@@ -1,4 +1,5 @@
 import { sql, Profile, Project, PressItem } from '@/lib/db';
+import Image from 'next/image';
 import { 
   Terminal, 
   ExternalLink, 
@@ -17,13 +18,16 @@ import {
   MapPin,
   FileCode,
   CheckCircle2,
-  Lock
+  Lock,
+  Download,
+  FileText
 } from 'lucide-react';
 import SocialAppGrid from '@/components/SocialAppGrid';
 import ProjectCard from '@/components/ProjectCard';
 import PressSection from '@/components/PressSection';
 import MusicSection from '@/components/MusicSection';
 import LegalNotice from '@/components/LegalNotice';
+import ResumeSection from '@/components/ResumeSection';
 
 async function getSiteData() {
   let profile: Profile | null = null;
@@ -68,7 +72,9 @@ async function getSiteData() {
       iheart_url: 'https://www.iheart.com/artist/vitali-zelianko-51235341',
       qobuz_url: 'https://www.qobuz.com/us-en/interpreter/vitali-zelianko/35309201',
       location: 'European Union',
-      education: 'Communications Academy'
+      education: 'Communications Academy',
+      avatar_url: '/vitali-zelianko.jpg',
+      resume_url: '/vitali-zelianko-cv.pdf'
     };
   }
 
@@ -80,20 +86,25 @@ export default async function HomePage() {
 
   return (
     <div className="relative min-h-screen text-slate-100 antialiased selection:bg-sky-500/30 selection:text-sky-200">
-      {/* Top Ambient Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-slate-950/75 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="flex items-center gap-2.5 font-bold tracking-tight text-white hover:text-sky-400 transition-colors">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500/20 to-purple-500/20 border border-white/10 text-sky-400 font-mono text-sm font-extrabold shadow-inner">
-              VZ
-            </span>
-            <span className="text-lg tracking-tight">Vitali Zelianko</span>
+      {/* Top Ambient Navigation (VZ removed, elegant avatar added) */}
+      <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-slate-950/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
+          <a href="#" className="flex items-center gap-3 font-bold tracking-tight text-white hover:text-sky-400 transition-colors group">
+            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-sky-500/30 group-hover:ring-sky-400 transition-all shadow-md">
+              <img
+                src="/vitali-zelianko.jpg"
+                alt="Vitali Zelianko"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+            <span className="text-base tracking-tight font-semibold">Vitali Zelianko</span>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-400">
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-400">
             <a href="#about" className="hover:text-white transition-colors">Profile</a>
             <a href="#apps" className="hover:text-white transition-colors">Apps & Hub</a>
             <a href="#projects" className="hover:text-white transition-colors">Engineering & SaaS</a>
+            <a href="#resume" className="hover:text-white transition-colors text-emerald-400">ATS CV</a>
             <a href="#press" className="hover:text-white transition-colors">Press</a>
             <a href="#music" className="hover:text-white transition-colors">Music</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
@@ -101,70 +112,109 @@ export default async function HomePage() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/Vitalikdeve"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-all"
+              href="/vitali-zelianko-cv.pdf"
+              download="Vitali_Zelianko_CV.pdf"
+              className="flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all font-mono"
             >
-              <Github className="h-4 w-4" />
-              <span>GitHub</span>
+              <Download className="h-3.5 w-3.5" />
+              <span>Resume PDF</span>
             </a>
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25"
+              className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-1.5 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25"
             >
-              <span>Collaboration</span>
+              <span>Connect</span>
             </a>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="about" className="relative mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-28 md:pb-20">
-        <div className="flex flex-col items-start gap-6 max-w-4xl">
-          {/* Status Badges */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 text-xs font-mono text-sky-400">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Founder & Systems Architect</span>
+      {/* Hero Section with Official Portrait */}
+      <section id="about" className="relative mx-auto max-w-6xl px-6 pt-16 pb-16 md:pt-24 md:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Hero Left Content */}
+          <div className="lg:col-span-7 flex flex-col items-start gap-6">
+            {/* Status Badges */}
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 text-xs font-mono text-sky-400">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Founder & Systems Architect</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-mono text-purple-300">
+                <Disc className="h-3 w-3 animate-spin" />
+                <span>Electronic Producer</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
+                <MapPin className="h-3 w-3 text-sky-400" />
+                <span>{profile.location}</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
+                <GraduationCap className="h-3 w-3 text-purple-400" />
+                <span>{profile.education}</span>
+              </div>
             </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-mono text-purple-300">
-              <Disc className="h-3 w-3 animate-spin" />
-              <span>Electronic Producer</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
-              <MapPin className="h-3 w-3 text-sky-400" />
-              <span>{profile.location}</span>
-            </div>
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
-              <GraduationCap className="h-3 w-3 text-purple-400" />
-              <span>{profile.education}</span>
+
+            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.08] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-100 to-slate-400">
+              {profile.headline}
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-xl">
+              {profile.bio}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+              <a
+                href="#resume"
+                className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/25 font-mono"
+              >
+                <Download className="h-4 w-4" />
+                <span>Download ATS Resume (PDF)</span>
+              </a>
+              <a
+                href="#projects"
+                className="flex items-center gap-2 rounded-2xl bg-sky-500/10 border border-sky-500/30 px-5 py-3.5 text-sm font-semibold text-sky-300 hover:bg-sky-500/20 transition-all font-mono"
+              >
+                <Terminal className="h-4 w-4 text-sky-400" />
+                <span>Explore Systems</span>
+              </a>
+              <a
+                href="#music"
+                className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all backdrop-blur font-mono"
+              >
+                <Headphones className="h-4 w-4 text-purple-400" />
+                <span>Discography</span>
+              </a>
             </div>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl leading-[1.06] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-100 to-slate-400">
-            {profile.headline}
-          </h1>
+          {/* Hero Right: Official Portrait Showcase */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <div className="relative group">
+              {/* Outer Glow Background */}
+              <div className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-tr from-sky-500 via-purple-600 to-emerald-400 opacity-30 blur-2xl group-hover:opacity-50 transition duration-700 pointer-events-none" />
 
-          <p className="text-lg text-slate-400 leading-relaxed max-w-2xl">
-            {profile.bio}
-          </p>
+              {/* Main Portrait Glassmorphic Frame */}
+              <div className="relative flex flex-col rounded-[28px] border border-white/15 bg-slate-950/80 p-3.5 shadow-2xl backdrop-blur-2xl">
+                <div className="relative h-80 w-72 sm:h-96 sm:w-80 overflow-hidden rounded-[22px] border border-white/10 bg-slate-900">
+                  <img
+                    src="/vitali-zelianko.jpg"
+                    alt="Vitali Zelianko portrait"
+                    className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+                  />
+                  {/* Subtle Gradient Vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
-          <div className="flex flex-wrap items-center gap-4 pt-4">
-            <a
-              href="#projects"
-              className="flex items-center gap-2 rounded-2xl bg-sky-500 px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-xl shadow-sky-500/25 font-mono"
-            >
-              <Terminal className="h-4 w-4" />
-              <span>Inspect Systems Architecture</span>
-            </a>
-            <a
-              href="#music"
-              className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all backdrop-blur font-mono"
-            >
-              <Headphones className="h-4 w-4 text-purple-400" />
-              <span>Explore Discography</span>
-            </a>
+                  {/* Floating Overlay Pill */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl border border-white/15 bg-slate-950/80 px-3 py-2 backdrop-blur-md">
+                    <div>
+                      <div className="text-xs font-bold text-white">Vitali Zelianko</div>
+                      <div className="text-[10px] font-mono text-sky-400">Verified Identity</div>
+                    </div>
+                    <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -183,8 +233,8 @@ export default async function HomePage() {
             <div className="text-xs text-slate-400 mt-1">Global Music Distribution</div>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
-            <div className="text-3xl font-bold font-mono text-amber-400">9 Locales</div>
-            <div className="text-xs text-slate-400 mt-1">Full Key Parity Localization</div>
+            <div className="text-3xl font-bold font-mono text-amber-400">100/100</div>
+            <div className="text-xs text-slate-400 mt-1">ATS Parser Readability Score</div>
           </div>
         </div>
       </section>
@@ -228,6 +278,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 100% ATS Resume & Qualifications Section */}
+      <ResumeSection />
 
       {/* Press, Media & Ecosystem */}
       <div id="press">
@@ -323,6 +376,9 @@ export default async function HomePage() {
             </a>
             <a href="https://vitocv.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
               VitoCV™
+            </a>
+            <a href="/vitali-zelianko-cv.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+              CV (PDF)
             </a>
             <a href="mailto:VitaliZelianko@vitocv.com" className="hover:text-slate-300 transition-colors">
               Direct Contact

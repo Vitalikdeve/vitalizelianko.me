@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   keywords: [
     'Vitali Zelianko',
     'Vitalikdeve',
+    'Vitali Zelenko',
     'VitoCV',
     'ResumeAI',
     'AI Systems Architect',
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     'Tidal Artist',
     'Communications Academy',
     'Full Stack Engineer',
+    'ATS Resume Vitali Zelianko',
     'TypeScript',
     'Next.js 15'
   ],
@@ -31,18 +33,33 @@ export const metadata: Metadata = {
   creator: 'Vitali Zelianko',
   publisher: 'Vitali Zelianko',
   openGraph: {
-    type: 'website',
+    type: 'profile',
+    firstName: 'Vitali',
+    lastName: 'Zelianko',
+    username: 'Vitalikdeve',
     locale: 'en_US',
     url: 'https://vitalizelianko.me',
     siteName: 'Vitali Zelianko — Official Platform',
     title: 'Vitali Zelianko — Founder & CEO @ VitoCV · AI Systems Architect · Electronic Music Producer',
     description: 'Founder & CEO of VitoCV (ResumeAI), creator of next-ai-toolkit and MegaConvert, and electronic music producer distributed worldwide.',
+    images: [
+      {
+        url: '/vitali-zelianko.jpg',
+        width: 800,
+        height: 1200,
+        alt: 'Vitali Zelianko Official Portrait'
+      }
+    ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Vitali Zelianko — Founder & CEO @ VitoCV · AI Architect',
     description: 'Founder & CEO of VitoCV (ResumeAI), builder of resilient AI cascades and electronic soundscapes.',
     creator: '@vitocv_com',
+    images: ['/vitali-zelianko.jpg']
+  },
+  verification: {
+    google: 'google-site-verification-vitalizelianko',
   },
   robots: {
     index: true,
@@ -73,6 +90,7 @@ export default function RootLayout({
         '@id': 'https://vitalizelianko.me/#person',
         name: 'Vitali Zelianko',
         alternateName: ['Vitalikdeve', 'Vitali Zelenko'],
+        image: 'https://vitalizelianko.me/vitali-zelianko.jpg',
         jobTitle: 'Founder, CEO & AI Systems Architect',
         alumniOf: {
           '@type': 'EducationalOrganization',
@@ -102,7 +120,8 @@ export default function RootLayout({
           'https://youtube.com/@vitalizelianko?si=obP92Cp-_rUQicyz',
           'https://www.tiktok.com/t/ZP8tYncSc/',
           'https://www.facebook.com/share/17urzu3NvC/?mibextid=wwXIfr',
-          'https://www.crunchbase.com/organization/vitocv'
+          'https://www.crunchbase.com/organization/vitocv',
+          'https://commons.wikimedia.org/wiki/File:Vitali_Zelianko_portrait.jpg'
         ]
       },
       {

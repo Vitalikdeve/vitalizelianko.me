@@ -31,27 +31,27 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <div className="glass-card flex flex-col justify-between rounded-3xl border border-white/[0.08] bg-slate-950/60 p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 hover:border-sky-500/30">
+    <div className="flex flex-col justify-between rounded-3xl border border-white/[0.08] bg-[#090a0e] p-6 sm:p-8 transition-all duration-200 hover:border-white/[0.18] hover:bg-[#0e0f15]">
       <div>
         {/* Top Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="rounded-lg border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-mono font-medium text-sky-400">
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-medium text-zinc-300">
               {project.category}
             </span>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs text-zinc-500">
               {project.role}
             </span>
           </div>
 
-          {/* Tab Switcher */}
-          <div className="inline-flex rounded-xl border border-white/10 bg-white/[0.04] p-1 text-xs">
+          {/* Apple Segmented Control */}
+          <div className="inline-flex rounded-xl border border-white/10 bg-black/60 p-1 text-xs">
             <button
               onClick={() => setActiveTab('overview')}
               className={`rounded-lg px-3 py-1 font-medium transition-all ${
                 activeTab === 'overview'
-                  ? 'bg-sky-500 text-slate-950 font-semibold shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-white text-black font-semibold shadow-sm'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               Overview
@@ -61,8 +61,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 onClick={() => setActiveTab('architecture')}
                 className={`rounded-lg px-3 py-1 font-medium transition-all ${
                   activeTab === 'architecture'
-                    ? 'bg-sky-500 text-slate-950 font-semibold shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 Architecture
@@ -73,8 +73,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 onClick={() => setActiveTab('code')}
                 className={`rounded-lg px-3 py-1 font-medium transition-all flex items-center gap-1 ${
                   activeTab === 'code'
-                    ? 'bg-sky-500 text-slate-950 font-semibold shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
                 }`}
               >
                 <Code2 className="h-3 w-3" />
@@ -85,10 +85,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         {/* Title and Tagline */}
-        <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
+        <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white mt-1">
           {project.title}
         </h3>
-        <p className="text-sm font-medium text-sky-300/80 mt-1.5 leading-snug">
+        <p className="text-sm font-medium text-zinc-400 mt-1.5 leading-snug">
           {project.tagline}
         </p>
 
@@ -96,7 +96,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="mt-5 min-h-[120px]">
           {activeTab === 'overview' && (
             <div className="space-y-4">
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-zinc-300 leading-relaxed font-normal">
                 {project.description}
               </p>
               {/* Tech Stack Pills */}
@@ -104,7 +104,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 {project.tech_stack?.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 text-xs font-mono text-slate-300"
+                    className="rounded-md border border-white/[0.06] bg-white/[0.02] px-2.5 py-1 text-xs text-zinc-400 font-mono"
                   >
                     {tech}
                   </span>
@@ -114,22 +114,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           )}
 
           {activeTab === 'architecture' && project.architecture_summary && (
-            <div className="rounded-2xl border border-sky-500/20 bg-sky-950/20 p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-mono text-sky-400 font-semibold uppercase">
-                <Cpu className="h-3.5 w-3.5" />
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-2">
+              <div className="flex items-center gap-2 text-xs text-zinc-300 font-medium uppercase tracking-wider">
+                <Cpu className="h-3.5 w-3.5 text-zinc-400" />
                 <span>System Architecture Blueprint</span>
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-zinc-300 leading-relaxed font-normal">
                 {project.architecture_summary}
               </p>
             </div>
           )}
 
           {activeTab === 'code' && project.code_snippet && (
-            <div className="relative rounded-2xl border border-white/10 bg-slate-950 p-4 font-mono text-xs overflow-x-auto">
+            <div className="relative rounded-2xl border border-white/10 bg-black p-4 font-mono text-xs overflow-x-auto">
               <button
                 onClick={handleCopy}
-                className="absolute top-3 right-3 flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="absolute top-3 right-3 flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
                 title="Copy code"
               >
                 {copied ? (
@@ -144,7 +144,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                   </>
                 )}
               </button>
-              <pre className="text-slate-300 pr-16 leading-relaxed">
+              <pre className="text-zinc-300 pr-16 leading-relaxed">
                 <code>{project.code_snippet}</code>
               </pre>
             </div>
@@ -159,7 +159,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.demo_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-lg shadow-sky-500/20"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-black hover:bg-zinc-200 transition-colors shadow-sm"
           >
             <span>Live Platform</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -171,11 +171,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.case_study_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-4 py-2 text-xs font-semibold text-purple-300 hover:bg-purple-500/20 transition-colors"
+            className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs font-medium text-zinc-200 hover:bg-white/[0.08] transition-colors"
           >
             <FileText className="h-3.5 w-3.5" />
             <span>Architecture Whitepaper</span>
-            <ExternalLink className="h-3.5 w-3.5 text-purple-400" />
+            <ExternalLink className="h-3.5 w-3.5 text-zinc-400" />
           </a>
         )}
 
@@ -184,7 +184,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             href={project.github_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors ml-auto"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/[0.06] transition-colors ml-auto"
           >
             <Github className="h-3.5 w-3.5" />
             <span>Repository</span>

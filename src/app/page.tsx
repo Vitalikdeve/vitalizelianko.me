@@ -86,28 +86,28 @@ export default async function HomePage() {
   const { profile, projects, press } = await getSiteData();
 
   return (
-    <div className="relative min-h-screen text-slate-100 antialiased selection:bg-sky-500/30 selection:text-sky-200">
-      {/* Top Ambient Navigation (VZ removed, elegant avatar added) */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-slate-950/80 backdrop-blur-xl">
+    <div className="relative min-h-screen bg-black text-zinc-100 antialiased selection:bg-white/20 selection:text-white">
+      {/* Apple Pro Minimal Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-black/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <a href="#" className="flex items-center gap-3 font-bold tracking-tight text-white hover:text-sky-400 transition-colors group">
-            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-sky-500/30 group-hover:ring-sky-400 transition-all shadow-md">
+          <a href="#" className="flex items-center gap-3 font-semibold tracking-tight text-white hover:text-zinc-300 transition-colors group">
+            <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full ring-1 ring-white/20 group-hover:ring-white/40 transition-all shadow-sm">
               <img
                 src="/vitali-zelianko.jpg"
                 alt="Vitali Zelianko"
                 className="h-full w-full object-cover object-top"
               />
             </div>
-            <span className="text-base tracking-tight font-semibold">Vitali Zelianko</span>
+            <span className="text-sm tracking-tight font-medium">Vitali Zelianko</span>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-400">
+          <nav className="hidden lg:flex items-center gap-7 text-xs font-medium text-zinc-400">
             <a href="#about" className="hover:text-white transition-colors">Profile</a>
-            <a href="#apps" className="hover:text-white transition-colors">Apps & Hub</a>
-            <a href="#projects" className="hover:text-white transition-colors">Engineering & SaaS</a>
-            <a href="#resume" className="hover:text-white transition-colors text-emerald-400">ATS CV</a>
+            <a href="#apps" className="hover:text-white transition-colors">Platforms & Hub</a>
+            <a href="#projects" className="hover:text-white transition-colors">Engineering</a>
+            <a href="#resume" className="hover:text-white transition-colors text-zinc-200">ATS CV</a>
             <a href="#press" className="hover:text-white transition-colors">Press</a>
-            <a href="#music" className="hover:text-white transition-colors">Music</a>
+            <a href="#music" className="hover:text-white transition-colors">Discography</a>
             <a href="#contact" className="hover:text-white transition-colors">Contact</a>
           </nav>
 
@@ -115,14 +115,14 @@ export default async function HomePage() {
             <a
               href="/vitali-zelianko-cv.pdf"
               download="Vitali_Zelianko_CV.pdf"
-              className="flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20 transition-all font-mono"
+              className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:bg-white/[0.08] hover:text-white transition-colors"
             >
               <Download className="h-3.5 w-3.5" />
               <span>Resume PDF</span>
             </a>
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-sky-500 px-4 py-1.5 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-all shadow-lg shadow-sky-500/25"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-black hover:bg-zinc-200 transition-colors shadow-sm"
             >
               <span>Connect</span>
             </a>
@@ -135,83 +135,80 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Hero Left Content */}
           <div className="lg:col-span-7 flex flex-col items-start gap-6">
-            {/* Status Badges */}
+            {/* Executive Badges */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-3.5 py-1 text-xs font-mono text-sky-400">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 text-xs text-zinc-300 font-medium">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/80" />
                 <span>Founder & Systems Architect</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-mono text-purple-300">
-                <Disc className="h-3 w-3 animate-spin" />
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-300 font-medium">
+                <Disc className="h-3 w-3 text-zinc-400" />
                 <span>Electronic Producer</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
-                <MapPin className="h-3 w-3 text-sky-400" />
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-400 font-medium">
+                <MapPin className="h-3 w-3 text-zinc-400" />
                 <span>{profile.location}</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono text-slate-400">
-                <GraduationCap className="h-3 w-3 text-purple-400" />
+              <div className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-zinc-400 font-medium">
+                <GraduationCap className="h-3 w-3 text-zinc-400" />
                 <span>{profile.education}</span>
               </div>
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl leading-[1.08] text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-100 to-slate-400">
+            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl leading-[1.08] text-white">
               {profile.headline}
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg text-zinc-400 leading-relaxed max-w-xl font-normal">
               {profile.bio}
             </p>
 
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="#resume"
-                className="flex items-center gap-2 rounded-2xl bg-emerald-500 px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/25 font-mono"
+                className="flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black hover:bg-zinc-200 transition-all shadow-md"
               >
                 <Download className="h-4 w-4" />
                 <span>Download ATS Resume (PDF)</span>
               </a>
               <a
                 href="#projects"
-                className="flex items-center gap-2 rounded-2xl bg-sky-500/10 border border-sky-500/30 px-5 py-3.5 text-sm font-semibold text-sky-300 hover:bg-sky-500/20 transition-all font-mono"
+                className="flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3.5 text-sm font-medium text-white hover:bg-white/[0.08] transition-all"
               >
-                <Terminal className="h-4 w-4 text-sky-400" />
+                <Terminal className="h-4 w-4 text-zinc-400" />
                 <span>Explore Systems</span>
               </a>
               <a
                 href="#music"
-                className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all backdrop-blur font-mono"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-3.5 text-sm font-medium text-zinc-300 hover:bg-white/[0.04] hover:text-white transition-all"
               >
-                <Headphones className="h-4 w-4 text-purple-400" />
+                <Headphones className="h-4 w-4 text-zinc-400" />
                 <span>Discography</span>
               </a>
             </div>
           </div>
 
-          {/* Hero Right: Official Portrait Showcase */}
+          {/* Hero Right: Official Portrait Showcase (Apple Pro Titanium Frame) */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <div className="relative group">
-              {/* Outer Glow Background */}
-              <div className="absolute -inset-1.5 rounded-[32px] bg-gradient-to-tr from-sky-500 via-purple-600 to-emerald-400 opacity-30 blur-2xl group-hover:opacity-50 transition duration-700 pointer-events-none" />
-
-              {/* Main Portrait Glassmorphic Frame */}
-              <div className="relative flex flex-col rounded-[28px] border border-white/15 bg-slate-950/80 p-3.5 shadow-2xl backdrop-blur-2xl">
-                <div className="relative h-80 w-72 sm:h-96 sm:w-80 overflow-hidden rounded-[22px] border border-white/10 bg-slate-900">
+            <div className="relative">
+              {/* Precision Milled Titanium Frame */}
+              <div className="relative flex flex-col rounded-3xl border border-white/[0.12] bg-[#0c0d12] p-3 shadow-2xl">
+                <div className="relative h-80 w-72 sm:h-96 sm:w-80 overflow-hidden rounded-2xl border border-white/[0.08] bg-[#12131a]">
                   <img
                     src="/vitali-zelianko.jpg"
                     alt="Vitali Zelianko portrait"
-                    className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+                    className="h-full w-full object-cover object-top transition duration-500 hover:scale-[1.01]"
                   />
                   {/* Subtle Gradient Vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
 
-                  {/* Floating Overlay Pill */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl border border-white/15 bg-slate-950/80 px-3 py-2 backdrop-blur-md">
+                  {/* Floating Identity Pill */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-xl border border-white/10 bg-black/85 px-3.5 py-2 backdrop-blur-xl">
                     <div>
-                      <div className="text-xs font-bold text-white">Vitali Zelianko</div>
-                      <div className="text-[10px] font-mono text-sky-400">Verified Identity</div>
+                      <div className="text-xs font-semibold text-white">Vitali Zelianko</div>
+                      <div className="text-[10px] text-zinc-400">Verified Entity · Portfolio 2026</div>
                     </div>
-                    <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
                   </div>
                 </div>
               </div>
@@ -219,23 +216,23 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Global Key Metrics Banner */}
-        <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-4 pt-8 border-t border-white/[0.08]">
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
-            <div className="text-3xl font-bold font-mono text-sky-400">10k+</div>
-            <div className="text-xs text-slate-400 mt-1">Platform Users & Runs</div>
+        {/* Global Key Metrics Banner (Strict Titanium Aesthetic) */}
+        <div className="mt-16 grid grid-cols-2 gap-3.5 sm:grid-cols-4 pt-8 border-t border-white/[0.08]">
+          <div className="rounded-2xl border border-white/[0.07] bg-[#08080c] p-5">
+            <div className="text-3xl font-semibold tracking-tight text-white">10k+</div>
+            <div className="text-xs text-zinc-400 mt-1">Platform Users & Runs</div>
           </div>
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
-            <div className="text-3xl font-bold font-mono text-emerald-400">99.98%</div>
-            <div className="text-xs text-slate-400 mt-1">AI Failover Availability</div>
+          <div className="rounded-2xl border border-white/[0.07] bg-[#08080c] p-5">
+            <div className="text-3xl font-semibold tracking-tight text-white">99.98%</div>
+            <div className="text-xs text-zinc-400 mt-1">AI Failover Availability</div>
           </div>
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
-            <div className="text-3xl font-bold font-mono text-purple-400">9 DSPs</div>
-            <div className="text-xs text-slate-400 mt-1">Global Music Distribution</div>
+          <div className="rounded-2xl border border-white/[0.07] bg-[#08080c] p-5">
+            <div className="text-3xl font-semibold tracking-tight text-white">9 DSPs</div>
+            <div className="text-xs text-zinc-400 mt-1">Global Music Distribution</div>
           </div>
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-5 backdrop-blur-md">
-            <div className="text-3xl font-bold font-mono text-amber-400">100/100</div>
-            <div className="text-xs text-slate-400 mt-1">ATS Parser Readability Score</div>
+          <div className="rounded-2xl border border-white/[0.07] bg-[#08080c] p-5">
+            <div className="text-3xl font-semibold tracking-tight text-white">100/100</div>
+            <div className="text-xs text-zinc-400 mt-1">ATS Parser Readability Score</div>
           </div>
         </div>
       </section>
@@ -246,18 +243,17 @@ export default async function HomePage() {
       </div>
 
       {/* Deep Dive Projects & Technical Case Studies */}
-      <section id="projects" className="relative py-20 border-t border-white/[0.06] bg-slate-950/30">
+      <section id="projects" className="relative py-20 border-t border-white/[0.08] bg-[#030305]">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 pb-6 border-b border-white/[0.06]">
             <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
-                <Layers className="h-3.5 w-3.5" />
+              <div className="text-xs font-semibold text-zinc-400 tracking-wider uppercase mb-2">
                 Engineering Systems & SaaS
               </div>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-white">
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
                 Flagship Platforms & Architecture
               </h2>
-              <p className="mt-2 text-slate-400 max-w-2xl">
+              <p className="mt-2 text-sm text-zinc-400 max-w-2xl leading-relaxed">
                 Explore in-depth system architecture designs, resilience patterns, and production code snippets across enterprise SaaS and distributed developer tools.
               </p>
             </div>
@@ -265,10 +261,10 @@ export default async function HomePage() {
               href="https://github.com/Vitalikdeve"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-sky-400 hover:text-sky-300"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
             >
               <span>All Repositories</span>
-              <ExternalLink className="h-3.5 w-3.5" />
+              <ExternalLink className="h-3.5 w-3.5 text-zinc-400" />
             </a>
           </div>
 
@@ -292,17 +288,16 @@ export default async function HomePage() {
       <MusicSection profile={profile} />
 
       {/* Contact & Inquiries */}
-      <section id="contact" className="relative py-20 border-t border-white/[0.06] bg-slate-950/70">
+      <section id="contact" className="relative py-20 border-t border-white/[0.08] bg-[#020204]">
         <div className="mx-auto max-w-4xl px-6">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">
-              <Mail className="h-3.5 w-3.5" />
+            <div className="text-xs font-semibold text-zinc-400 tracking-wider uppercase mb-2">
               Direct Communication
             </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-white">
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
               Initiate Collaboration
             </h2>
-            <p className="mt-3 text-slate-400 max-w-xl mx-auto">
+            <p className="mt-3 text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
               Open for technical architecture advisory, strategic SaaS partnerships, venture opportunities, and music licensing.
             </p>
           </div>
@@ -315,22 +310,22 @@ export default async function HomePage() {
       <LegalNotice />
 
       {/* Footer */}
-      <footer className="border-t border-white/[0.06] py-10 bg-slate-950">
-        <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <footer className="border-t border-white/[0.08] py-10 bg-black">
+        <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <div>
             © 2026 Vitali Zelianko (vitalizelianko.me). All rights reserved.
           </div>
-          <div className="flex items-center gap-6 font-mono">
-            <a href="https://github.com/Vitalikdeve" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
+          <div className="flex items-center gap-6">
+            <a href="https://github.com/Vitalikdeve" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">
               GitHub
             </a>
-            <a href="https://vitocv.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
+            <a href="https://vitocv.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">
               VitoCV™
             </a>
-            <a href="/vitali-zelianko-cv.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+            <a href="/vitali-zelianko-cv.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-200 transition-colors">
               CV (PDF)
             </a>
-            <a href="mailto:VitaliZelianko@vitocv.com" className="hover:text-slate-300 transition-colors">
+            <a href="mailto:VitaliZelianko@vitocv.com" className="hover:text-zinc-300 transition-colors">
               Direct Contact
             </a>
           </div>

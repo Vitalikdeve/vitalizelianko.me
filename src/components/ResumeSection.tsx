@@ -2,32 +2,25 @@
 
 import React from 'react';
 import { 
-  FileText, 
   Download, 
   CheckCircle2, 
-  ShieldCheck, 
-  Sparkles, 
   ExternalLink,
-  Cpu,
-  GraduationCap,
-  Briefcase
 } from 'lucide-react';
 
 export default function ResumeSection() {
   return (
-    <section id="resume" className="relative py-20 border-t border-white/[0.06] bg-slate-950/60">
+    <section id="resume" className="relative py-20 border-t border-white/[0.08] bg-[#020204]">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 mb-12">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 mb-12 pb-6 border-b border-white/[0.06]">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              100% Global ATS Compliance
+            <div className="text-xs font-semibold text-zinc-400 tracking-wider uppercase mb-2">
+              Verified Qualifications & Compliance
             </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-5xl text-white">
-              Curriculum Vitae & Verified Qualifications
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
+              Curriculum Vitae & Technical Credentials
             </h2>
-            <p className="mt-2 text-slate-400 max-w-2xl">
-              Engineered according to international Applicant Tracking System (ATS) guidelines: single-column linear text flow, standardized taxonomy, and verified keyword density for senior leadership and systems architecture roles.
+            <p className="mt-2 text-sm text-zinc-400 max-w-2xl leading-relaxed">
+              Engineered according to international Applicant Tracking System (ATS) guidelines: single-column linear text flow, standardized taxonomy, and verified keyword density for executive and architecture roles.
             </p>
           </div>
 
@@ -36,7 +29,7 @@ export default function ResumeSection() {
             <a
               href="/vitali-zelianko-cv.pdf"
               download="Vitali_Zelianko_CV.pdf"
-              className="flex items-center gap-2.5 rounded-2xl bg-emerald-500 px-6 py-3.5 text-sm font-semibold text-slate-950 hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-500/20 font-mono"
+              className="flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors shadow-sm"
             >
               <Download className="h-4 w-4" />
               <span>Download ATS CV (PDF)</span>
@@ -45,45 +38,45 @@ export default function ResumeSection() {
               href="/vitali-zelianko-cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-5 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-all font-mono"
+              className="flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3.5 text-sm font-medium text-white hover:bg-white/[0.08] transition-colors"
             >
-              <ExternalLink className="h-4 w-4" />
+              <ExternalLink className="h-4 w-4 text-zinc-400" />
               <span>View in Browser</span>
             </a>
           </div>
         </div>
 
-        {/* ATS Quality Audit Cards */}
-        <div className="grid gap-6 md:grid-cols-3">
-          <div className="glass-card rounded-3xl border border-emerald-500/20 bg-emerald-950/10 p-6">
+        {/* ATS Quality Audit Cards (Apple Titanium Grade) */}
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#090a0e] p-6 transition-all duration-200 hover:border-white/[0.18]">
             <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-xs text-emerald-400 font-bold uppercase">ATS Format Audit</span>
-              <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-mono text-emerald-300 font-bold">100/100</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">ATS Format Audit</span>
+              <span className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-xs text-white font-medium">100/100</span>
             </div>
-            <h4 className="text-lg font-bold text-white mb-2">Linear Text Taxonomy</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="text-base font-semibold text-white mb-1.5">Linear Text Taxonomy</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed font-normal">
               Zero tables, multi-column blocks, or canvas artifacts. Fully readable by Workday, Taleo, Greenhouse, Lever, iCIMS, and BambooHR.
             </p>
           </div>
 
-          <div className="glass-card rounded-3xl border border-sky-500/20 bg-sky-950/10 p-6">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#090a0e] p-6 transition-all duration-200 hover:border-white/[0.18]">
             <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-xs text-sky-400 font-bold uppercase">Experience Weight</span>
-              <span className="rounded-full bg-sky-500/20 px-2.5 py-0.5 text-xs font-mono text-sky-300 font-bold">Senior / Lead</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Experience Weight</span>
+              <span className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-xs text-white font-medium">Senior / Founder</span>
             </div>
-            <h4 className="text-lg font-bold text-white mb-2">Venture & Systems Leadership</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="text-base font-semibold text-white mb-1.5">Venture & Systems Leadership</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed font-normal">
               Founder & CEO @ VitoCV, distributed systems architect, author of next-ai-toolkit and high-throughput transformation engines.
             </p>
           </div>
 
-          <div className="glass-card rounded-3xl border border-purple-500/20 bg-purple-950/10 p-6">
+          <div className="rounded-2xl border border-white/[0.08] bg-[#090a0e] p-6 transition-all duration-200 hover:border-white/[0.18]">
             <div className="flex items-center justify-between mb-4">
-              <span className="font-mono text-xs text-purple-400 font-bold uppercase">Credentials</span>
-              <span className="rounded-full bg-purple-500/20 px-2.5 py-0.5 text-xs font-mono text-purple-300 font-bold">Verified</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Credentials</span>
+              <span className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-xs text-white font-medium">Verified</span>
             </div>
-            <h4 className="text-lg font-bold text-white mb-2">Engineering & Communications</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="text-base font-semibold text-white mb-1.5">Engineering & Communications</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed font-normal">
               Degree from Communications Academy (Telecommunications & Computer Systems Engineering). Based in the European Union.
             </p>
           </div>

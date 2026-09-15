@@ -21,7 +21,7 @@ async function sendTelegramAlert({
   message: string;
   ip: string;
 }) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const token = process.env.TELEGRAM_BOT_TOKEN || (process.env as any).ELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {

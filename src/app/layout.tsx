@@ -9,9 +9,26 @@ export const metadata: Metadata = {
   },
   description: 'Official portfolio and systems engineering showcase of Vitali Zelianko. Founder & CEO of VitoCV (ResumeAI), creator of next-ai-toolkit and MegaConvert, and electronic music producer distributed on Spotify, Apple Music, and Tidal.',
   keywords: [
+    'Виталий',
+    'Виталий Зелянко',
+    'Виталий Зеленко',
+    'Виталик',
+    'Виталик Зелянко',
+    'Виталя',
+    'Vitali',
+    'Vitalik',
     'Vitali Zelianko',
     'Vitalikdeve',
     'Vitali Zelenko',
+    'Vitaly Zelianko',
+    'Vitaliy Zelianko',
+    'Vitaly Zelenko',
+    'Виталий разработчик',
+    'Виталий программист',
+    'Виталий музыкант',
+    'Виталий архитектор',
+    'Виталий VitoCV',
+    'Виталий ResumeAI',
     'VitoCV',
     'ResumeAI',
     'AI Systems Architect',
@@ -60,6 +77,10 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'google-site-verification-vitalizelianko',
+    yandex: 'yandex-verification-token',
+    other: {
+      'msvalidate.01': 'bing-verification-token',
+    },
   },
   robots: {
     index: true,
@@ -99,7 +120,23 @@ export default function RootLayout({
         '@type': 'Person',
         '@id': 'https://vitalizelianko.me/#person',
         name: 'Vitali Zelianko',
-        alternateName: ['Vitalikdeve', 'Vitali Zelenko'],
+        givenName: 'Vitali',
+        familyName: 'Zelianko',
+        additionalName: ['Виталий', 'Виталик', 'Vitalik', 'Vitaly', 'Vitaliy'],
+        alternateName: [
+          'Виталий Зелянко',
+          'Виталий',
+          'Виталик Зелянко',
+          'Виталик',
+          'Виталя',
+          'Vitalikdeve',
+          'Vitali Zelenko',
+          'Vitaly Zelianko',
+          'Vitaliy Zelianko',
+          'Vitaly Zelenko',
+          'Vitali'
+        ],
+        gender: 'https://schema.org/Male',
         image: 'https://vitalizelianko.me/vitali-zelianko.jpg',
         jobTitle: 'Founder, CEO & AI Systems Architect',
         alumniOf: {
@@ -113,6 +150,30 @@ export default function RootLayout({
         },
         description: 'Founder & CEO @ VitoCV, builder of multi-provider AI failovers and distributed file systems, and electronic music producer.',
         url: 'https://vitalizelianko.me',
+        knowsAbout: [
+          'Artificial Intelligence',
+          'Distributed Systems',
+          'Next.js & TypeScript Architecture',
+          'High-Performance Cloud Infrastructure',
+          'Electronic Music Production',
+          'Audio Engineering & Mastering',
+          'SaaS Product Leadership',
+          'VitoCV & ResumeAI'
+        ],
+        hasOccupation: [
+          {
+            '@type': 'Occupation',
+            name: 'AI Systems Architect & Tech Founder',
+            occupationalCategory: '15-1252.00',
+            skills: 'AI Failover Systems, TypeScript, Next.js, Cloud Run, Supabase, Neon'
+          },
+          {
+            '@type': 'Occupation',
+            name: 'Electronic Music Producer',
+            occupationalCategory: '27-2041.00',
+            skills: 'Synthesizer Design, Audio Production, Mastering, Soundscapes'
+          }
+        ],
         sameAs: [
           'https://github.com/Vitalikdeve',
           'https://open.spotify.com/artist/5tjCSnC4R007H7E5ODqLs4?si=LQtgztahRTyel1schcUUUA&utm_source=copy-link',
@@ -139,7 +200,17 @@ export default function RootLayout({
         '@id': 'https://vitalizelianko.me/#website',
         url: 'https://vitalizelianko.me',
         name: 'Vitali Zelianko Official Platform',
+        alternateName: ['Виталий Зелянко Официальный Сайт', 'Vitali Zelianko Portfolio'],
         publisher: {
+          '@id': 'https://vitalizelianko.me/#person'
+        }
+      },
+      {
+        '@type': 'ProfilePage',
+        '@id': 'https://vitalizelianko.me/#profilepage',
+        url: 'https://vitalizelianko.me',
+        name: 'Vitali Zelianko — Official Founder & Systems Architect Profile',
+        mainEntity: {
           '@id': 'https://vitalizelianko.me/#person'
         }
       }

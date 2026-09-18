@@ -210,6 +210,10 @@ export default function RootLayout({
         '@id': 'https://vitalizelianko.me/#profilepage',
         url: 'https://vitalizelianko.me',
         name: 'Vitali Zelianko — Official Founder & Systems Architect Profile',
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['h1', 'p', 'title']
+        },
         mainEntity: {
           '@id': 'https://vitalizelianko.me/#person'
         }

@@ -1,4 +1,4 @@
-﻿import { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -14,10 +14,20 @@ export default function robots(): MetadataRoute.Robots {
           'Googlebot-Image',
           'bingbot',
           'Applebot',
+          'Applebot-Extended',
           'DuckDuckBot',
           'YandexBot',
           'Baiduspider',
           'Slurp',
+          'GPTBot',
+          'ChatGPT-User',
+          'OAI-SearchBot',
+          'PerplexityBot',
+          'ClaudeBot',
+          'anthropic-ai',
+          'Google-Extended',
+          'CCBot',
+          'cohere-ai',
         ],
         allow: '/',
         disallow: ['/api/'],

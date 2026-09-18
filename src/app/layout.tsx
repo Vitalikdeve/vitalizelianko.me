@@ -77,7 +77,7 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'google-site-verification-vitalizelianko',
-    yandex: 'yandex-verification-token',
+    yandex: '37c6b48524ef44ac',
     other: {
       'msvalidate.01': 'bing-verification-token',
     },
